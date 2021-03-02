@@ -1,18 +1,28 @@
-import * as PIXI from "pixi.js";
-import { bootstrapApp } from "./bootstrapApp";
-import Explosion from "./objects/explosion";
+//import * as PIXI from "pixi.js";
+import App from "./utils/App";
+import Game from "./Screens/game";
+import Loading from "./Screens/loading";
+import StartButton from "./Screens/startbutton";
+import BackGround from "./Screens/background";
+
 //import Box from "./objects/box";
-import Square from "./objects/square";
-import FancyText from "./utils/fancytext";
-import Physics from "./utils/physics";
 
 // Create our application instance
-var app = bootstrapApp();
+const app = new App();
+const loading = new Loading(app);
+const start = new StartButton(app);
+const mainGame = new Game(app);
+app.bg = new BackGround(app);
+app.stage.addChild(app.bg);
+app.setGame(mainGame);
+
 //app.stop();
 // Load the bunny texture
 //app.loader.baseUrl = "./objects";
+app.goTo(loading);
 app.loader
   .add("bunny", "https://pixijs.io/examples/examples/assets/bunny.png")
+  .add("circle", "https://pixijs.io/examples/examples/assets/circle.png")
   .add(
     "spritesheet",
     "https://pixijs.io/examples/examples/assets/spritesheet/mc.json"
@@ -42,61 +52,9 @@ function startup() {
   // Lol
   //const box = new Box();
   //app.stage.addChild(box);
-  const squareArray = [
-    new Square(
-      5,
-      "0x00FF00",
-      (app.screen.width - 100) / 2,
-      (app.screen.height - 100) / 2
-    ),
-    new Square(1, "0xFF0000")
-  ];
+  setTimeout(() => {
+    app.goTo(start);
+  }, 3000);
 
-  const physics = new Physics();
-  const explode = new Explosion();
-
-  const newtext = new FancyText("Hello World");
-  app.stage.addChild(newtext);
-
-  // Listen for animate update
-
-  app.ticker.add((delta) => {
-    const mouseCoords = app.renderer.plugins.interaction.mouse.global;
-
-    squareArray.forEach((s) => {
-      s.init(app.screen, delta, mouseCoords, physics);
-      squareArray.forEach((sa) => {
-        if (sa !== s && physics.testForAABB(s, sa)) {
-          // Calculate the changes in acceleration that should be made between
-          // each square as a result of the collision
-          const collisionPush = physics.collisionResponse(s, sa);
-          // Set the changes in acceleration for both squares
-          sa.acceleration.set(
-            collisionPush.x * s.mass,
-            collisionPush.y * s.mass
-          );
-          s.acceleration.set(
-            -(collisionPush.x * sa.mass),
-            -(collisionPush.y * sa.mass)
-          );
-
-          explode.setCoords(sa.x + sa.width * 0.5, sa.y + sa.height * 0.5);
-          app.stage.addChild(explode);
-          app.stage.removeChild(s);
-          app.stage.removeChild(sa);
-
-          setTimeout(function () {
-            app.stage.removeChild(explode);
-          }, 1500);
-        }
-      });
-    });
-  });
-
-  // Add to stage
-  squareArray.forEach((s) => {
-    app.stage.addChild(s);
-  });
-
-  //app.stage.addChild(redSquare, greenSquare);
+  app.ticker.add((delta) => {});
 }
