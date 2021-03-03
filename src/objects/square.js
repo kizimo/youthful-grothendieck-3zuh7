@@ -1,7 +1,13 @@
 import * as PIXI from "pixi.js";
 
-export default function Square(mass = 3, tint = "0xFF0000", x = 100, y = 100) {
-  this.s = new PIXI.Sprite(PIXI.Texture.WHITE);
+export default function Square(
+  tex,
+  mass = 3,
+  tint = "0xFF0000",
+  x = 100,
+  y = 100
+) {
+  this.s = new PIXI.Sprite(tex);
   this.s.position.set(x, y);
   this.s.width = 100;
   this.s.height = 100;
