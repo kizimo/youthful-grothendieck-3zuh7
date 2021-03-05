@@ -1,14 +1,10 @@
-// Adapted from: https://www.pixiplayground.com/
-
 import * as PIXI from "pixi.js";
-//import ClockTimer from "@gamestdio/timer";
 
 export default function App() {
   this.app = new PIXI.Application({
     width: window.innerWidth,
     height: window.innerHeight
   });
-  //this.clock = new ClockTimer();
 
   this.app.onResize = () => {
     // resize renderer
@@ -28,7 +24,6 @@ export default function App() {
       scene instanceof PIXI.DisplayObject ? scene : new scene();
 
     this.stage.addChild(this.currentScene);
-    //this.stage.addChildAt(this.currentScene, 1);
   };
 
   this.app.setGame = function (g) {
@@ -39,11 +34,18 @@ export default function App() {
     this.goTo(this.mainGame);
   };
 
-  document.body.appendChild(this.app.view);
+  // remove any canvases if they exist, this is fix for parcel hot realoding module
+  if (document.getElementById("app").firstChild) {
+    document
+      .getElementById("app")
+      .removeChild(document.getElementById("app").firstChild);
+  }
+
+  document.getElementById("app").appendChild(this.app.view);
+
+  //document.body.appendChild(this.app.view);
   window.addEventListener("resize", this.app.onResize);
   this.app.onResize();
-
-  //this.app.ticker.shared.add(() => this.clock.tick());
 
   return this.app;
 }

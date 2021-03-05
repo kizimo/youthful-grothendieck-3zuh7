@@ -25,7 +25,7 @@ app.loader
   )
   .add(
     "sphere",
-    "https://uploads.codesandbox.io/uploads/user/4de3665d-280a-4823-9c5e-c274e2967540/96JS-circle.png"
+    "https://uploads.codesandbox.io/uploads/user/4de3665d-280a-4823-9c5e-c274e2967540/rtQD-whitesphere.jpeg"
   )
   .add(
     "bgmusic",
@@ -52,9 +52,9 @@ function startup() {
   const start = new StartButton(app);
 
   const mainGame = new Game(app);
-  app.bg = new BackGround(app);
+  //app.bg = new BackGround(app);
 
-  app.stage.addChild(app.bg);
+  //app.stage.addChild(app.bg);
   //console.log(app.loader.resources);
   //app.loader.resources.bgmusic.data.loop = true;
   //app.loader.resources.bgmusic.data.singleInstance = true;
@@ -84,7 +84,8 @@ function startup() {
   //const box = new Box();
   //app.stage.addChild(box);
   setTimeout(() => {
-    app.goTo(start);
+    app.goTo(mainGame);
+    //app.goTo(start);
   }, 3000);
 
   app.ticker.add((delta) => {});

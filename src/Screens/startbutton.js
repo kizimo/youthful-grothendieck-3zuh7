@@ -12,7 +12,10 @@ export default function StartButton(app) {
   this.container.addChild(newtext);
 
   newtext.interactive = true;
+  newtext.buttonMode = true;
+
   newtext.click = () => {
+    this.container.removeChild(newtext);
     app.bg.engage(() => {
       app.goToGame();
     });

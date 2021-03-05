@@ -7,6 +7,15 @@ export default function Loading(app) {
     (app.screen.width - 100) / 2,
     (app.screen.height - 100) / 2
   );
+
+  this.container.text = "loading...";
+  const newtext = new FancyText(this.container.text, -20, 100);
+  this.container.addChild(newtext);
+
+  this.container.setText = function (t) {
+    newtext.set(t);
+  };
+
   const size = 100;
   const ballAmount = 7;
   const balls = [];
@@ -22,9 +31,6 @@ export default function Loading(app) {
     );
     balls.push(ball);
   }
-
-  const newtext = new FancyText("loading", -20, 100);
-  this.container.addChild(newtext);
 
   let phase = 0;
 

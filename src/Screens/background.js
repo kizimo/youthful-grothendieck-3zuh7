@@ -1,9 +1,5 @@
 import * as PIXI from "pixi.js";
 
-const starTexture = PIXI.Texture.from(
-  "https://pixijs.io/examples/examples/assets/star.png"
-);
-
 const starAmount = 1000;
 const fov = 20;
 const baseSpeed = 0.025;
@@ -37,7 +33,7 @@ export default function BackGround(app) {
   };
   for (let i = 0; i < starAmount; i++) {
     const star = {
-      sprite: new PIXI.Sprite(starTexture),
+      sprite: new PIXI.Sprite(app.loader.resources.starTexture.texture),
       z: 0,
       x: 0,
       y: 0
